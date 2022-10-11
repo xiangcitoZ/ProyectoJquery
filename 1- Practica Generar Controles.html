@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Generar controles dinámicos</h1>
+    <input type="range" id="rango" onchange=""/>
+    <p id="valorrango">1</p>
+    <div id="padre"></div>
+
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+         
+         
+
+        $(document).ready(function(){
+
+            // función para cambiar
+            $("#rango").change(function(){
+                //VALOR DE RANGO
+                var rango = parseInt($("#rango").val());
+                $("#valorrango").text(rango);
+
+                //BUCLE
+                for( var i = 1; i <= rango; i++){
+                    //1. CREAR IMAGEN EN ESTE CODIGO
+                    var crearImagen = $("<img>",{
+
+                           // //2. AÑADIRLE UN SRC A LA IMAGEN CREADA
+                        "src":"imag/zapatillas2.jpg" ,
+                        "style" : "height : 100px"
+                    });
+                    
+                    //3. AÑADIR LA IMAGEN AL PARENT
+                    crearImagen.appendTo($("#padre"));
+                    //4.- CLICK
+                    crearImagen.mouseover(function(){
+                        this.src = "imag/zapatillas1.webp"
+                    });
+
+                    crearImagen.mouseout(function(){
+                        this.src = "imag/zapatillas2.jpg"
+                    });
+
+                };
+            })
+
+
+        });
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=ç, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <h1>Clientes</h1>
+        <div id="caja"></div>
+        <h1 id="resultado"></h1>
+        <script src="js/jquery-3.6.1.min.js"></script>
+        <script>
+
+            var numeroNombres = 0;
+            $(document).ready(function(){
+                
+                $.get("doc/ClientesXML.xml",function(data){
+                    console.log("Está leyendo");
+                    var html = "";
+                    
+                    $(data).find("CLIENTE").each(function(){
+                        
+                        var nombre = $(this).find("NOMBRE").first().text();
+                        html += " "+nombre;
+                        
+                        var crearBotones = $("<button>",{
+                            "text"  : nombre, 
+                            "value" : nombre,
+                            "id" : nombre
+                    });
+
+                        crearBotones.appendTo($("#caja"))
+
+                    })
+
+                    crearBotones.click(function(){
+                        
+
+                    })
+
+
+
+                });
+
+            });
+
+        </script>
+
+</body>
+</html>

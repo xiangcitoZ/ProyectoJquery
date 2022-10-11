@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Gnerar controles </h1>
+    <label>Introduzca un texto</label>
+    <input type="text" id="cajatexto"/>
+    <button type="button" id="botoncrear">
+        Crear control
+    </button>
+    <div id="padre"></div>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("h1").click(function(){
+                alert("No funciona...");
+            });
+
+
+            $("#botoncrear").click(function(){
+                //RECUPERAMOS EL TEXTO DE LA CAJA
+                var texto = $("#cajatexto").val();
+                //CREAMOS UN <h1> POR CADA CLICK
+                var h1 = $("<h1>",{
+                    "text": texto,
+                    "style": "color:blue"
+
+                }); 
+                //AÑADIMOS EL CONTROL AL PADRE
+                h1.appendTo($("#padre"));
+
+                //AL PULSAR SOBRE EL <h1> QUEREMOS CAMBIAR SU
+                //TEXTO Y SU COLOR
+
+                h1.click(function(){
+                    //CAPTURAMOS EL VALOR DE LA CAJA EN ESTE CLICK
+                    var contenido = $("#cajatexto").val();
+                    $(this).text(contenido);
+                    $(this).css("color","red");
+                    $(this).css("background-color","yellow");
+                });
+                
+            });
+        });  
+    </script>
+</body>
+</html>

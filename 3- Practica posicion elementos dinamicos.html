@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="range" id="rango" value="1" />
+    <div id="padre"></div>
+
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+      
+        $(document).ready(function(){
+
+            $("#rango").change(function(){
+                var rango = parseInt($("#rango").val());
+               
+                //LIMPAR EL PADRE, PARA QUITAR TODO
+                $("#padre").text("");    
+
+                 //BUCLE   
+                 for(var i = 0; i<= rango; i++){
+                    //CREAR BOTONES
+                    var boton = $("<button>",{
+                        "text": "imagen " + (i +1),
+                        
+                        //LE DAMOS UN ID PARA COGER LA POSICION
+                        //NO DEBE COINCIDIR CON EL ID DE IMAGENES
+                        "id": (i +1)
+                    });
+
+                    //CREAR IMAGENES
+                    var imagen = $("<img>",{
+                        "src": "imag/zapatillas2.jpg",
+                        "style" : "height : 100px",
+
+                        //LE DAMOS UN ID PARA COGER LA POSICION
+                        // NO DEBE COINCIDIR CON EL ID DE BOTONES
+                        "id": "imagen"+(i +1)
+                    });
+
+                    //HACER CLICK AL BOTON PARA CAMBIAR IMAGEN
+                    boton.click(function(){
+                        
+                        //DEL BOTON, RECUPERAMOS LA POSICION EN DATA
+                        var posicion = "#imagen" + $(this).attr("id");
+    
+                        //3
+                        //CAMBIAMOS LA IMAGEN CON EL ID DE POSICION
+                        $(posicion).attr("src","imag/zapatillas1.webp");
+                    })
+
+                    //ASOCIAR AL PADRE, QUE TE LO MUESTRE
+                    boton.appendTo($("#padre"));
+                    imagen.appendTo($("#padre"));
+                } 
+            })
+
+        });
+
+    </script>
+</body>
+</html>

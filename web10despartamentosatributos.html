@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Departamentos Atributos</h1>
+    <label>Introduzca ID:</label>
+    <input type="text" id="cajaid"/>
+    <button type="button" id="botonbuscarid">
+        Buscar departamento
+    </button>
+    <hr/>
+    <label>Introduzca localidad</label>
+    <input type="text" id="cajalocalidad"/>
+    <button type="button" id="botonbuscarlocalidad">
+        Buscar localidad
+    </button>
+    <hr/>
+    <button type="button" id="botondepartamentos">
+        Cargar Departamentos
+    </button>
+    <table id="tabladepartamentos">
+        <thead>
+            <tr>
+                <th>NUMERO</th>
+                <th>NOMBRE</th>
+                <th>LOCALIDAD</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+
+    </table>
+    <h1 id="mensaje" style="color:red"></h1>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //BOTON DE BUSCAR ID
+            $("#botonbuscarid").click(function(){
+                var id = $("#cajaid").val();
+                $.get("doc/departamentos.xml", function(data){
+                    var html = "";
+                    //DEPT[DEPT_NO=10]
+                    var filtro = "DEPT[DEPT_NO="+ id +"]";
+                    //CAPTURAMOS EL NODO DE <DEPT>
+                    var nododept = $(data).find(filtro).first();
+                    var nombre = $(nododept).find("DNOMBRE").first().text();
+                    var localidad = $(nododept).find("LOC").first().text();
+                    html += "<tr>";
+                    html += "<td>" + nododept.attr("DEPT_NO") + "</td>";
+                    html += "<td>" + nombre + "</td>";
+                    html += "<td>" + localidad + "</td>";
+                    html += "</tr>";        
+                    $("#tabladepartamentos tbody").html(html);
+                });
+            });
+
+            //BOTON DE BUSCAR LOCALIDAD
+            $("#botonbuscarlocalidad").click(function(){
+                var loc = $("#cajalocalidad").val();
+                $.get("doc/departamentos.xml", function(data){
+                    var html = "";
+                    //LOC:contains(GIJON)               
+                    var filtro = "LOC:contains("+ loc +")";
+
+                    if($(data).find(filtro).length == 0){
+                        html = "No existen departamentos en " + loc;
+
+                    }else{
+                        //RECORREMOS LOS DATOS
+                        $(data).find(filtro).each(function(){
+                            //SOLO RECUPERAMOS 
+                            //<LOC>GIJON</LOC>
+                            html += $(this).text() + ",";
+                        });
+
+                    }                       
+                    $("#mensaje").html(html);
+                });
+            });
+
+            $("#botondepartamentos").click(function(){
+                var html="";
+                $.get("doc/departamentos.xml", function(data){
+                    console.log("Leyendo servicio");
+                    //NECESITAMOS RECUPERAR CADA ETIQUETA <DEPT>
+                    $(data).find("DEPT").each(function(){
+                        html += "<tr>";
+                        var numero = $(this).attr("DEPT_NO");
+                        var nombre = $(this).find("DNOMBRE").first().text();
+                        var localidad = $(this).find("LOC").first().text();
+                        html += "<td>" + numero + "</td>";
+                        html += "<td>" + nombre + "</td>";
+                        html += "<td>" + localidad +"</td>";
+                        html += "</tr>";    
+
+                    });  
+                    $("#tabladepartamentos tbody").html(html);
+                });
+            });
+            
+        });
+    </script>
+</body>
+</html>

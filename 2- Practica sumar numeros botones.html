@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1 > Sumar números botones</h1>
+    <h1 style="color: red" id="resultado">0</h1>
+    <div id="padre"></div>
+
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+               
+        $(document).ready(function(){
+
+            //DECLARACION DE VARIABLE
+            var suma = 0;
+
+            //BUCLE
+            for(var i = 1; i < 10; i++){
+                //1. CREAR LOS NÚMEROS
+                var random = parseInt((Math.random() * 100) + 1)  ;
+                //2. AÑADIR VALORES AL BOTON
+                var crearBotones = $("<button>",{
+                    "text":  random,
+                    "value": random
+            });
+            //3. AÑADIR LOS BOTONES AL PADRE
+            crearBotones.appendTo($("#padre"));
+            //4. CLICK
+            crearBotones.on("click",function(){
+                //RECUPERO EL TEXTO DEL BOTON
+                //this ES EL BOTON PULSADO
+                num = parseInt( $(this).val());
+ 
+                //LA SUMA
+                 suma = suma + num;
+
+                 //MOSTRAR TEXTO
+                $("#resultado").text(suma);
+
+            });
+            };
+
+        });
+    </script>
+</body>
+</html>
