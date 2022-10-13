@@ -46,8 +46,8 @@
                                 var idCliente = $(this).val();
 
                                 //MUESTRA EN CONSOLA EL VALOR DE ID
-                                console.log(valorBoton);
-                                var filtro = "CLIENTE[IDCLIENTE="+idcliente+"]";
+                                console.log(idCliente);
+                                var filtro = "CLIENTE[IDCLIENTE="+idCliente+"]";
 
                                 var nodoCliente = $(data).find(filtro).first();
                                 var nombre = $(nodoCliente).find("NOMBRE").first().text();
@@ -57,6 +57,14 @@
                                 var pagina = $(nodoCliente).find("PAGINAWEB").first().text();
                                 var imagen = $(nodoCliente).find("IMAGENCLIENTE").first().text();
 
+                                                                    
+                                   html += "<p>" + nombre + "</p>";
+                                   html += "<p>" + direccion + "</p>";
+                                   html += "<p>" + email + "</p>";
+                                   html += "<p>" + codigopostal  +"</p>";
+                                   html += "<p>" + pagina + "</p>";
+                                           
+                                   $("#resultado").html(html);
                              });
 
                           });
