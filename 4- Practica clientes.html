@@ -22,25 +22,44 @@
                     
                     $(data).find("CLIENTE").each(function(){
                         
+                        //COJO EL VALOR DEL NOMBRE PAR ABUSCAR
                         var nombre = $(this).find("NOMBRE").first().text();
+
+                        //COJO EL VALOR DE ID CLIENTE CON EL ATRIBUTO
+                        var id = $(this).attr("IDCLIENTE");
                         html += " "+nombre;
                         
                         var crearBotones = $("<button>",{
                             "text"  : nombre, 
-                            "value" : nombre,
-                            "id" : nombre
+                            "value" : id
+                            
                     });
 
-                        crearBotones.appendTo($("#caja"))
+                    //MOSTRAR LOS BOTONES EN LA CAJA DIV
+                        crearBotones.appendTo($("#caja"));
 
-                    })
+                            // FUNCION DEL BOTON
+                            crearBotones.click(function(){
+                                var html="";
+                                
+                                //COGES EL VALUE del cliente en el BOTON
+                                var idCliente = $(this).val();
 
-                    crearBotones.click(function(){
-                        
+                                //MUESTRA EN CONSOLA EL VALOR DE ID
+                                console.log(valorBoton);
+                                var filtro = "CLIENTE[IDCLIENTE="+idcliente+"]";
 
-                    })
+                                var nodoCliente = $(data).find(filtro).first();
+                                var nombre = $(nodoCliente).find("NOMBRE").first().text();
+                                var direccion = $(nodoCliente).find("DIRECCION").first().text();
+                                var email = $(nodoCliente).find("EMAIL").first().text();
+                                var codigopostal = $(nodoCliente).find("CODIGOPOSTAL").first().text();
+                                var pagina = $(nodoCliente).find("PAGINAWEB").first().text();
+                                var imagen = $(nodoCliente).find("IMAGENCLIENTE").first().text();
 
+                             });
 
+                          });
 
                 });
 

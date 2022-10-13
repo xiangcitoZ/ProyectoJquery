@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Jugadores JSON</h1>
+    <select id="selectjugadores"></select>
+    <div id="contenido"></div>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //AL SELECCIONAR UN ELEMENTO EN EL <option>
+            //MOSTRAMOS LOS DATOS DEL JUGADOR 
+            //NO EXISTEN BUSQUEDAS, DEBEMOS LEER TODO
+            //Y DIBUJAR UNO    
+            $("#selectjugadores").change(function(){
+                //RECUPERAMOS EL INDICE DEL ELEMENTO SELECCIONADO
+                var index = $(this).prop("selectedIndex");
+                //DEBEMOS ACCEDER DE NUEVO AL SERVICIO
+                $.ajax({
+                    "url" : "doc/JSON/jugadores.json"
+                    , "method" : "GET"
+                    , success : function(data){
+                        var jugador = data.jugadores[index];
+                        var html = "<h1>"+ jugador.nombre +"</h1>";
+                        html += "<h1>Posición: "+jugador.posicion + "</h1>";
+                        html += "<h1>Edad: "+jugador.edad + "</h1>";
+                        html += "<img src= '"+ jugador.imagen+ "'" + 
+                        " style='width:150 px; height: 150px' />";
+                        $("#contenido").html(html);
+                    }
+                });
+            });
+
+            //AL INICIAR, LEEMOS TODOS LOS JUGADORES Y LOS GUARDAMOS EN EL <select>
+            $.getJSON("doc/JSON/jugadores.json", function(data){
+                $.each(data.jugadores, function(index, jugador){
+                    var name = jugador.nombre;
+                    //CREAMOS UN <option> POR CADA JUGADOR
+
+                        console.log("Leyendo");
+
+                    var option = $("<option>",{
+                        "text": name
+                    }) ;   
+                    $("#selectjugadores").append(option);
+
+                });
+            });
+        });
+    </script>
+</body>
+</html>
