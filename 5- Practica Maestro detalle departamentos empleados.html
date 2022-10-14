@@ -39,7 +39,12 @@
     </table>
     <script src="js/jquery-3.6.1.min.js"></script>
     <script>
+
+        //RUTA
         var urlDepartamentos = "https://apicruddepartamentoscore.azurewebsites.net/";
+        var urlEmpleados = "https://apiempleadosspgs.azurewebsites.net/";
+
+        
         function cargarDepartamentos() {
             var request = "api/departamentos";
 
@@ -75,7 +80,7 @@
                         boton.click(function(){
                             var numero = $(this).val();
                             console.log(numero);
-                            var urlEmpleados = "https://apiempleadosspgs.azurewebsites.net/"
+                            
                             var request = "api/empleados/empleadosdepartamento/";
                             $.ajax({
                                 "url": urlEmpleados + request,
