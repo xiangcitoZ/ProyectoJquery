@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Incremento salarial oficios empleados</h1>
+    <label>Seleccione un oficio:</label> 
+    <select id="selectOifcios"></select>
+    <hr/>
+    <label>Incremento salarial</label>
+    <input type="text" id="cajaIncremento"/>
+    <button id="botonIncrementar">Incrementar salarios</button>
+
+    <table id="tablaEmpleados">
+        <thead>
+            <tr>
+                <th>Apellido</th>
+                <th>Oficio</th>
+                <th>Salario</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+
+    </table>
+    
+
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+        var url = "https://apiempleadosaction.azurewebsites.net/";
+        
+        $(document).ready(function(){
+           
+            console.log("oficio");
+                var request = "/api/Empleados/GetOficios/oficios";
+                $.ajax({
+                    "url" : url + request,
+                    "method" : "GET",
+                    "dataType" : "json"
+                    ,success : function(data){
+                        var html = "";
+                        $.each(data, function(index,oficio){
+                        
+                        var oficio = oficio.oficio
+                        var option =  $("<option>", {
+                        "text": oficio
+                    });
+                    $("#selectOficio").append(option);
+                    });
+
+                        }})
+                        
+        //BOTON INCREMENTAR
+         $("#botonIncrementar").click(function() {
+           
+                var request = "/api/Empleados/IncrementarSalarioOficios/"+idOficio+"/" + incremento;
+                $.ajax({
+                    "url": url + request,
+                    "type": "PUT",
+                    "data": datos, 
+                    "contentType": "application/json",
+                    success: function() {
+                        console.log("Modificado");
+                        
+                    }
+                });
+            });       
+                    }
+        )
+
+        var request = "/api/Empleados";
+            $.ajax({
+                "url": url + request
+                , "method": "GET"
+                , "dataType": "json"
+                , success: function(data){
+                    var html = "";
+                    $.each(data, function(index, empl){
+                        html += "<tr>";
+                        html += "<td>" + empl.idEmpleado + "</td>";
+                        html += "<td>" + empl.apellido + "</td>";
+                        html += "<td>" + empl.oficio + "</td>";
+                        html += "<td>" + empl.salario + "</td>";
+                        html += "<td>" + empl.director + "</td>";
+                        html += "</tr>";
+                    });
+                    $("#tablaEmpleados tbody").html(html);
+                }
+            });
+
+        
+       
+    </script>
+</body>
+</html>
